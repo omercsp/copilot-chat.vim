@@ -3,7 +3,8 @@ scriptencoding utf-8
 let s:plugin_dir = expand('<sfile>:p:h:h')
 let s:device_token_file = s:plugin_dir . "/.device_token"
 let s:chat_token_file = s:plugin_dir . "/.chat_token"
-let s:chat_config_file = s:plugin_dir ."/config.json"
+let s:chat_config_file = s:plugin_dir . "/config.json"
+let s:prompts = {}
 let s:token_headers = [
   \ 'Accept: application/json',
   \ 'User-Agent: GithubCopilot/1.155.0',
@@ -36,6 +37,7 @@ function! LoadConfig()
   if filereadable(s:chat_config_file)
     let l:config = json_decode(join(readfile(s:chat_config_file), "\n"))
     let s:default_model = l:config.model
+    let s:prompts = l:config.prompts
   else
     let l:config = {'model': s:default_model}
     call writefile([json_encode(l:config)], s:chat_config_file)
@@ -94,11 +96,13 @@ function! CopilotChat()
   syntax match CopilotSeparatorIcon /^/
   syntax match CopilotSeparatorLine / ━\+$/
   syntax match CopilotWaiting /Waiting for response\.*$/
+  syntax match CopilotPrompt /^> .*/
 
   highlight CopilotWaiting ctermfg=46 guifg=#33FF33
   highlight CopilotWelcome ctermfg=205 guifg=#ff69b4
   highlight CopilotSeparatorIcon ctermfg=45 guifg=#00d7ff
   highlight CopilotSeparatorLine ctermfg=205 guifg=#ff69b4
+  highlight CopilotPrompt ctermfg=230 guifg=#FFFF33
 
   if !exists("g:syntax_on")
     syntax enable
@@ -115,7 +119,20 @@ function! SubmitChatMessage()
   let l:separator_line = search(' ━\+$', 'nw')
   let l:start_line = l:separator_line + 1
   let l:end_line = line('$')
-  let l:message = join(getline(l:start_line, l:end_line), "\n")
+
+  let l:lines = getline(l:start_line, l:end_line)
+
+  for l:i in range(len(l:lines))
+    let l:line = l:lines[l:i]
+    if l:line =~ '^> \(\w\+\)'
+      let l:text = matchstr(l:line, '^> \(\w\+\)')
+      let l:text = substitute(l:text, '^> ', '', '')
+      if has_key(s:prompts, l:text)
+        let l:lines[l:i] = s:prompts[l:text]
+      endif
+    endif
+  endfor
+  let l:message = join(l:lines, "\n")
 
   call AsyncRequest(l:message)
 endfunction
