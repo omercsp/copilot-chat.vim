@@ -361,6 +361,25 @@ function! HandleCurlOutput(channel, msg)
   call add(s:curl_output, a:msg)
 endfunction
 
+function! AddSelectionToChatBuffer()
+  " Save the current register and selection type
+  let l:save_reg = @"
+  let l:save_regtype = getregtype('"')
+  let l:filetype = &filetype
+
+  " Get the visual selection
+  normal! gv"xy
+
+  " Get the content of the visual selection
+  let l:selection = getreg('x')
+
+  " Restore the original register and selection type
+  call setreg('"', l:save_reg, l:save_regtype)
+  call appendbufline(s:chat_buffer, '$', '```' . l:filetype)
+  call appendbufline(s:chat_buffer, '$', split(l:selection, "\n"))
+  call appendbufline(s:chat_buffer, '$', '```')
+endfunction
+
 command! CopilotChat call CopilotChat()
 command! SubmitChatMessage call SubmitChatMessage()
 command! CopilotConfig call ViewConfig()
@@ -368,3 +387,4 @@ command! CopilotModels call ViewModels()
 command! SelectModel call SelectModel()
 
 nnoremap <leader>cc :CopilotChat<CR>
+vnoremap <silent> <leader>a :<C-u>call AddSelectionToChatBuffer()<CR>
