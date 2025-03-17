@@ -16,13 +16,16 @@ let s:chat_buffer = -1
 let s:chat_count = 1
 let s:default_model = "gpt-4o"
 let s:available_models = []
+let s:colors_gui = ['#33FF33', '#4DFF33', '#66FF33', '#80FF33', '#99FF33', '#B3FF33', '#CCFF33', '#E6FF33', '#FFFF33']
+let s:colors_cterm = [46, 118, 154, 190, 226, 227, 228, 229, 230]
+let s:color_index = 0
 
 function! UserInputSeparator()
   let l:width = winwidth(0)-2
   let l:separator = " "
   let l:separator .= repeat('━', l:width)
-  call appendbufline(s:chat_buffer, line('$'), l:separator)
-  call appendbufline(s:chat_buffer, line('$'), '')
+  call appendbufline(s:chat_buffer, '$', l:separator)
+  call appendbufline(s:chat_buffer, '$', '')
   let l:win_id = bufwinid(s:chat_buffer)
   if l:win_id != -1
     call win_execute(l:win_id, 'normal! G')
@@ -63,7 +66,7 @@ function! SelectModel()
 endfunction
 
 function ConfirmSignin()
-    call FetchModels(GetChatToken())
+  call FetchModels(GetChatToken(v:true))
 endfunction
 
 function! CopilotChat()
@@ -88,10 +91,10 @@ function! CopilotChat()
   syntax match CopilotSeparatorIcon /^/
   syntax match CopilotSeparatorIcon /^/
   syntax match CopilotSeparatorLine / ━\+$/
-  syntax match CopilotWaiting /Waiting*./
-  
+  syntax match CopilotWaiting /Waiting for response\.*$/
+
+  highlight CopilotWaiting ctermfg=46 guifg=#33FF33
   highlight CopilotWelcome ctermfg=205 guifg=#ff69b4
-  highlight CopilotWaiting ctermfg=205 guifg=#ff69b4
   highlight CopilotSeparatorIcon ctermfg=45 guifg=#00d7ff
   highlight CopilotSeparatorLine ctermfg=205 guifg=#ff69b4
 
@@ -246,8 +249,11 @@ endfunction
 
 function! ValidateToken()
   let l:chat_token = GetChatToken()
-  let l:response = FetchModels(l:chat_token)
-
+  try
+    call FetchModels(l:chat_token)
+  catch
+    let l:chat_token = GetChatToken(v:true)
+  endtry
   return l:chat_token
 endfunction
 
@@ -257,6 +263,8 @@ function! UpdateWaitingDots()
       let l:dots = len(matchstr(l:current_text, '\..*$'))
       let l:new_dots = (l:dots % 3) + 1
       call setbufline(s:chat_buffer, '$', 'Waiting for response' . repeat('.', l:new_dots))
+    let s:color_index = (s:color_index + 1) % len(s:colors_gui)
+    execute 'highlight CopilotWaiting guifg=' . s:colors_gui[s:color_index] . ' ctermfg=' . s:colors_cterm[s:color_index]
   endif
   return 1
 endfunction
@@ -266,7 +274,7 @@ function! AsyncRequest(message)
   let s:curl_output = []
   let l:url = 'https://api.githubcopilot.com/chat/completions'
 
-  call appendbufline(s:chat_buffer, line('$'), 'Waiting for response')
+  call appendbufline(s:chat_buffer, '$', 'Waiting for response')
   let s:waiting_timer = timer_start(500, {-> UpdateWaitingDots()}, {'repeat': -1})
 
   " for knowledge bases its just an attachment as the content
@@ -282,7 +290,7 @@ function! AsyncRequest(message)
         \ 'stream': v:true,
         \ 'messages': l:messages
         \ })
-  
+
   let l:curl_cmd = [
       \ "curl",
       \ "-s",
@@ -295,7 +303,7 @@ function! AsyncRequest(message)
       \ "-d",
       \ l:data,
       \ l:url]
-  
+
   let job = job_start(l:curl_cmd, {'out_cb': function('HandleCurlOutput'), 'exit_cb': function('HandleCurlClose'), 'err_cb': function('HandleCurlError')})
   return job
 endfunction
@@ -306,6 +314,7 @@ function! HandleCurlError(channel, msg)
 endfunction
 
 function! HandleCurlClose(channel, msg)
+  call deletebufline(s:chat_buffer, '$')
   let l:result = ''
   for line in s:curl_output
     if line =~ '^data: {'
