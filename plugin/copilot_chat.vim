@@ -43,7 +43,7 @@ function! LoadConfig()
 endfunction
 
 function! ViewConfig()
-  vsplit s:chat_config_file
+  execute 'vsplit ' . s:chat_config_file
 endfunction
 
 function! ViewModels()
@@ -54,6 +54,8 @@ function! ViewModels()
   setlocal noswapfile
   call appendbufline(bufnr('%'), 0, 'Available Models:')
   call appendbufline(bufnr('%'), '$', s:available_models)
+  execute 'syntax match ActiveModel /^' . s:default_model . '/'
+  execute 'highlight ActiveModel guifg=#33FF33 ctermfg=46'
   nnoremap <buffer> <CR> :SelectModel<CR>
 endfunction
 
