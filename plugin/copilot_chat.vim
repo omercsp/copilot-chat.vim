@@ -56,7 +56,7 @@ function! ViewModels()
   setlocal noswapfile
   call appendbufline(bufnr('%'), 0, 'Available Models:')
   call appendbufline(bufnr('%'), '$', s:available_models)
-  execute 'syntax match ActiveModel /^' . s:default_model . '/'
+  execute 'syntax match ActiveModel /^' . s:default_model . '$/'
   execute 'highlight ActiveModel guifg=#33FF33 ctermfg=46'
   nnoremap <buffer> <CR> :SelectModel<CR>
 endfunction
