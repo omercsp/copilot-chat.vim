@@ -1,9 +1,9 @@
 scriptencoding utf-8
 
-let s:plugin_dir = expand('<sfile>:p:h:h')
-let s:device_token_file = s:plugin_dir . "/.device_token"
-let s:chat_token_file = s:plugin_dir . "/.chat_token"
-let s:chat_config_file = s:plugin_dir . "/config.json"
+let s:config_dir = expand('~/.vim/copilot-chat')
+let s:device_token_file = s:config_dir . "/.device_token"
+let s:chat_token_file = s:config_dir . "/.chat_token"
+let s:chat_config_file = s:config_dir . "/config.json"
 let s:prompts = {}
 let s:token_headers = [
   \ 'Accept: application/json',
@@ -34,6 +34,9 @@ function! UserInputSeparator()
 endfunction
 
 function! LoadConfig()
+  if !isdirectory(s:config_dir)
+    call mkdir(s:config_dir, "p")
+  endif
   if filereadable(s:chat_config_file)
     let l:config = json_decode(join(readfile(s:chat_config_file), "\n"))
     let s:default_model = l:config.model
