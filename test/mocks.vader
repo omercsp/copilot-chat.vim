@@ -1,0 +1,4 @@
+Execute:
+  function! ConfirmSignin()
+    return 1
+  endfunction

@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Vim
+        run: sudo apt-get install vim
+
+      - name: Test
+        run: |
+          git clone https://github.com/junegunn/vader.vim.git
+          git clone https://github.com/DanBradbury/copilot-chat.vim.git
+          vim -Nu <(cat << VIMRC
+          set rtp+=vader.vim
+          set rtp+=copilot-chat.vim
+          set rtp+=.
+          filetype plugin indent on
+          syntax enable
+          VIMRC) -c 'silent Vader! test/*' > /dev/null
