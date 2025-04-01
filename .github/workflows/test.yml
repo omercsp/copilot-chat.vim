@@ -23,10 +23,5 @@ jobs:
         run: |
           git clone https://github.com/junegunn/vader.vim.git
           git clone https://github.com/DanBradbury/copilot-chat.vim.git
-          vim -Nu <(cat << VIMRC
-          set rtp+=vader.vim
-          set rtp+=copilot-chat.vim
-          set rtp+=.
-          filetype plugin indent on
-          syntax enable
-          VIMRC) -c 'silent Vader! test/syntax.vader' > /dev/null
+          cp .devcontainer/vimrc ~/.vimrc
+          vim -c 'silent Vader! test/syntax.vader' > /dev/null
