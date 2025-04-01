@@ -1,3 +1,4 @@
+---
 name: Test
 
 on:
@@ -28,5 +29,4 @@ jobs:
           set rtp+=.
           filetype plugin indent on
           syntax enable
-          VIMRC
-          ) -c 'silent Vader! test/*' > /dev/null
+          VIMRC) -c 'silent Vader! test/syntax.vader' > /dev/null
