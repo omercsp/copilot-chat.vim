@@ -21,7 +21,7 @@ jobs:
 
       - name: Test
         run: |
-          git clone https://github.com/junegunn/vader.vim.git
-          git clone https://github.com/DanBradbury/copilot-chat.vim.git
-          cp .devcontainer/vimrc ~/.vimrc
-          vim -c 'silent Vader! test/syntax.vader'
+          mkdir -p ~/.vim/bundle
+          git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+          cp .devcontainer/vimrc ~/.vimrc && vim +PluginInstall +qall
+          vim '+Vader! test/*'
