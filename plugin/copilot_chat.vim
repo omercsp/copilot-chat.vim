@@ -110,7 +110,6 @@ function! CopilotChat()
   if !exists("g:syntax_on")
     syntax enable
   endif
-  set termguicolors
 
   call appendbufline(s:chat_buffer, 0, 'Welcome to Copilot Chat! Type your message below:')
   call UserInputSeparator()
