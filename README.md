@@ -1,6 +1,9 @@
 <div align="center">
 
 # Copilot Chat for Vim
+
+[![Vint](https://github.com/DanBradbury/copilot-chat.vim/actions/workflows/lint.yml/badge.svg)](https://github.com/DanBradbury/copilot-chat.vim/actions/workflows/lint.yml)
+
 Copilot Chat functionality without having to leave vim.
 
 Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nvim/CopilotChat.nvim) for a similar experience.
