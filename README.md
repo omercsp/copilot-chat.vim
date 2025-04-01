@@ -84,7 +84,10 @@ function validateUser() {
 ```
 This will send the full template text + your code to Copilot.
 
+## Contributing
+Please see the [contribution guide][] for more information
 
 [Neovim]: https://github.com/neovim/neovim/releases/latest
 [Vim]: https://github.com/vim/vim
 [NerdFonts]: https://www.nerdfonts.com
+[contribution guide]: ./CONTRIBUTING.md
