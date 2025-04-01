@@ -24,4 +24,4 @@ jobs:
           git clone https://github.com/junegunn/vader.vim.git
           git clone https://github.com/DanBradbury/copilot-chat.vim.git
           cp .devcontainer/vimrc ~/.vimrc
-          vim -c 'silent Vader! test/syntax.vader' > /dev/null
+          vim -c 'silent Vader! test/syntax.vader'
