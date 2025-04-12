@@ -1,3 +1,4 @@
+scriptencoding utf-8
 let s:colors_gui = ['#33FF33', '#4DFF33', '#66FF33', '#80FF33', '#99FF33', '#B3FF33', '#CCFF33', '#E6FF33', '#FFFF33']
 let s:colors_cterm = [46, 118, 154, 190, 226, 227, 228, 229, 230]
 let s:color_index = 0
