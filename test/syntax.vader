@@ -1,5 +1,3 @@
-Include: mocks.vader
-
 Execute:
   call copilot_chat#open_chat()
   AssertEqual SyntaxAt(1,1), 'CopilotWelcome'
