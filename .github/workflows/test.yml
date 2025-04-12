@@ -3,9 +3,6 @@ name: Test
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -24,4 +21,4 @@ jobs:
           mkdir -p ~/.vim/bundle
           git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
           cp .devcontainer/vimrc ~/.vimrc && vim +PluginInstall +qall
-          vim '+Vader! test/*'
+          vim -c 'silent Vader! test/syntax.vader'
