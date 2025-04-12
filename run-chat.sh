@@ -1,2 +1,2 @@
 #!/bin/sh
-vim -c "CopilotChat" -c "SubmitChatMessage"
+vim -c "CopilotChatOpen" -c "CopilotSubmit"

@@ -21,7 +21,7 @@ Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nv
 ## Commands
 | Command | Description |
 | ------- | ----------- |
-| `:CopilotChat` | Opens a new copilot window (default vsplit right) |
+| `:CopilotChatOpen` | Opens a new copilot window (default vsplit right) |
 | `:CopilotConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
 | `:CopilotModels` | View available modes / select active model |
 
