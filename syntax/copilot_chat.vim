@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 syntax match CopilotWelcome /^Welcome to Copilot Chat!.*$/
 syntax match CopilotSeparatorIcon /^/
 syntax match CopilotSeparatorIcon /^/

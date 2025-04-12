@@ -1,6 +1,8 @@
+scriptencoding utf-8
+
 let s:curl_output = []
 
-function! copilot_chat#api#async_request(message)
+function! copilot_chat#api#async_request(message) abort
   let l:chat_token = copilot_chat#auth#verify_signin()
   let s:curl_output = []
   let l:url = 'https://api.githubcopilot.com/chat/completions'
@@ -38,11 +40,11 @@ function! copilot_chat#api#async_request(message)
   return job
 endfunction
 
-function! copilot_chat#api#handle_job_output(channel, msg)
+function! copilot_chat#api#handle_job_output(channel, msg) abort
   call add(s:curl_output, a:msg)
 endfunction
 
-function! copilot_chat#api#handle_job_close(channel, msg)
+function! copilot_chat#api#handle_job_close(channel, msg) abort
   call deletebufline(g:active_chat_buffer, '$')
   let l:result = ''
   for line in s:curl_output
@@ -67,12 +69,12 @@ function! copilot_chat#api#handle_job_close(channel, msg)
   call copilot_chat#buffer#add_input_separator(g:active_chat_buffer)
 endfunction
 
-function! copilot_chat#api#handle_job_error(channel, msg)
+function! copilot_chat#api#handle_job_error(channel, msg) abort
   echom 'handling curl error'
   echom a:msg
 endfunction
 
-function! copilot_chat#api#fetch_models(chat_token)
+function! copilot_chat#api#fetch_models(chat_token) abort
   let l:chat_headers = [
     \ 'Content-Type: application/json',
     \ 'Authorization: Bearer ' . a:chat_token,

@@ -34,19 +34,19 @@ function! copilot_chat#buffer#create() abort
   return s:current_chat_buffer
 endfunction
 
-function! copilot_chat#buffer#add_input_separator(buffer)
+function! copilot_chat#buffer#add_input_separator(buffer) abort
   let l:width = winwidth(0) - 2
   let l:separator = ' ' . repeat('━', l:width)
   call appendbufline(a:buffer, '$', l:separator)
   call appendbufline(a:buffer, '$', '')
 endfunction
 
-function! copilot_chat#buffer#waiting_for_response()
+function! copilot_chat#buffer#waiting_for_response() abort
   call appendbufline(g:active_chat_buffer, '$', 'Waiting for response')
   let s:waiting_timer = timer_start(500, {-> copilot_chat#buffer#update_waiting_dots()}, {'repeat': -1})
 endfunction
 
-function! copilot_chat#buffer#update_waiting_dots()
+function! copilot_chat#buffer#update_waiting_dots() abort
   let l:current_text = getbufline(g:active_chat_buffer, '$')[0]
   if l:current_text =~? '^Waiting for response'
       let l:dots = len(matchstr(l:current_text, '\..*$'))
@@ -58,7 +58,7 @@ function! copilot_chat#buffer#update_waiting_dots()
   return 1
 endfunction
 
-function! copilot_chat#buffer#add_selection()
+function! copilot_chat#buffer#add_selection() abort
   " Save the current register and selection type
   let l:save_reg = @"
   let l:save_regtype = getregtype('"')

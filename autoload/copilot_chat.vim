@@ -1,4 +1,6 @@
-function! copilot_chat#open_chat()
+scriptencoding utf-8
+
+function! copilot_chat#open_chat() abort
   call copilot_chat#config#load()
   call copilot_chat#auth#verify_signin()
   let g:active_chat_buffer = copilot_chat#buffer#create()
@@ -6,7 +8,7 @@ function! copilot_chat#open_chat()
   normal! G
 endfunction
 
-function! copilot_chat#submit_message()
+function! copilot_chat#submit_message() abort
   let l:separator_line = search(' ━\+$', 'nw')
   let l:start_line = l:separator_line + 1
   let l:end_line = line('$')
@@ -18,8 +20,8 @@ function! copilot_chat#submit_message()
     if l:line =~? '^> \(\w\+\)'
       let l:text = matchstr(l:line, '^> \(\w\+\)')
       let l:text = substitute(l:text, '^> ', '', '')
-      if has_key(s:prompts, l:text)
-        let l:lines[l:i] = s:prompts[l:text]
+      if has_key(g:prompts, l:text)
+        let l:lines[l:i] = g:prompts[l:text]
       endif
     endif
   endfor
@@ -28,7 +30,7 @@ function! copilot_chat#submit_message()
   call copilot_chat#api#async_request(l:message)
 endfunction
 
-function! copilot_chat#http(method, url, headers, body)
+function! copilot_chat#http(method, url, headers, body) abort
   if has('win32')
     let l:ps_cmd = 'powershell -Command "'
     let l:ps_cmd .= '$headers = @{'

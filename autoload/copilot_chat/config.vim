@@ -28,11 +28,11 @@ function! copilot_chat#config#get(key, default) abort
   return a:default
 endfunction
 
-function! copilot_chat#config#view()
+function! copilot_chat#config#view() abort
   execute 'vsplit ' . s:chat_config_file
 endfunction
 
-function! copilot_chat#config#view_models()
+function! copilot_chat#config#view_models() abort
   vsplit
   enew
   setlocal buftype=nofile
@@ -45,7 +45,7 @@ function! copilot_chat#config#view_models()
   nnoremap <buffer> <CR> :SelectModel<CR>
 endfunction
 
-function! copilot_chat#config#select_model()
+function! copilot_chat#config#select_model() abort
   let l:selected_model = getline('.')
   let g:default_model = l:selected_model
   let l:config = json_decode(join(readfile(s:chat_config_file), "\n"))
