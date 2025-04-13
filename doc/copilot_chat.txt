@@ -264,6 +264,13 @@ Set to 1 to jump to the chat window when adding it a visual selection. If set
 to 0, the selection is added to the active chat window, but the user remains in
 the current window (default: 1).
 
+g:copilot_reuse_active_chat                    *g:copilot_reuse_active_chat*
+
+Set to 1 to reuse the active chat window when opening a new chat window. If set
+to 0, a new chat window is always created. Note that adding selection to is
+always appended to the active chat window, regardless of this setting (default:
+1).
+
 ==============================================================================
 8. Troubleshooting                             *copilot-chat-troubleshooting*
 
