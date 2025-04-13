@@ -16,7 +16,7 @@ endfunction
 
 function! copilot_chat#reset_chat() abort
   if g:active_chat_buffer == -1 || !bufexists(g:active_chat_buffer)
-    echom "No active chat window to reset"
+    echom 'No active chat window to reset'
     return
   endif
 
