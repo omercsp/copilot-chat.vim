@@ -23,6 +23,7 @@ Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nv
 | ------- | ----------- |
 | `:CopilotChat <input>` | Launches a new Copilot chat with your input as the initial prompt |
 | `:CopilotChatOpen` | Opens a new Copilot chat window (default vsplit right) |
+| `:CopilotGotoChat` | Opens the currently active chat window |
 | `:CopilotChatReset` | Resets the current chat window |
 | `:CopilotConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
 | `:CopilotModels` | View available modes / select active model |

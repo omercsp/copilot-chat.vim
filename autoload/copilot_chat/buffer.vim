@@ -4,7 +4,7 @@ let s:colors_cterm = [46, 118, 154, 190, 226, 227, 228, 229, 230]
 let s:color_index = 0
 let s:chat_count = 1
 
-function! copilot_chat#buffer#create() abort
+function! copilot_chat#buffer#winsplit() abort
   let l:position = copilot_chat#config#get('window_position', 'right')
 
   " Create split based on position
@@ -17,6 +17,10 @@ function! copilot_chat#buffer#create() abort
   elseif l:position ==# 'bottom'
     botright split
   endif
+endfunction
+
+function! copilot_chat#buffer#create() abort
+  call copilot_chat#buffer#winsplit()
 
   enew
 
@@ -50,6 +54,33 @@ function! copilot_chat#buffer#has_active_chat() abort
   endif
 
   return 1
+endfunction
+
+function! copilot_chat#buffer#goto_active_chat() abort
+  let l:current_buf = bufnr('%')
+  if copilot_chat#buffer#has_active_chat() == 0
+    return
+  endif
+
+  if l:current_buf == g:active_chat_buffer
+    return
+  endif
+  let l:windows = getwininfo()
+  for l:win in range(len(l:windows))
+    let l:win_info = l:windows[l:win]
+    if l:win_info.bufnr != g:active_chat_buffer ||
+	    \ (l:win_info.height == 0 && l:win_info.width == 0)
+      continue
+    endif
+    " We found an active chat buffer in the current window display, so
+    " switch to it.
+    execute l:win_info.winnr . ' wincmd w'
+    return
+  endfor
+
+  " Not found in current visible windows, so create a new split
+  call copilot_chat#buffer#winsplit()
+  execute 'buffer ' . g:active_chat_buffer
 endfunction
 
 function! copilot_chat#buffer#add_input_separator() abort

@@ -94,6 +94,9 @@ Copilot's AI assistant directly from within their editor.
                                                        *:CopilotChatList*
 :CopilotChatList         Lists all saved chat histories.
 
+                                                       *:CopilotGotoChat*
+:CopilotGotoChat	 Goto the Copilot Chat window, if it exists.
+
 ==============================================================================
 5. Key Mappings                                       *copilot-chat-mappings*
 
