@@ -23,8 +23,12 @@ Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nv
 | ------- | ----------- |
 | `:CopilotChat <input>` | Launches a new Copilot chat with your input as the initial prompt |
 | `:CopilotChatOpen` | Opens a new Copilot chat window (default vsplit right) |
+| `:CopilotChatReset` | Resets the current chat window |
 | `:CopilotConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
 | `:CopilotModels` | View available modes / select active model |
+| `:CopilotChatSave <name>?` | Save chat history (uses timestamp if no name provided) |
+| `:CopilotChatLoad <name>?` | Load chat history (shows list of saved histories if no name provided) |
+| `:CopilotChatList` | List all saved chat histories |
 
 ## Key Mappings
 | Location | Insert | Normal | Visual | Action |
@@ -52,6 +56,19 @@ Using `:CopilotModels` will bring up a buffer of all the available models for yo
 By default this is configured to `<Leader>a` when in visual mode
 - Adds the selection to the active chat window inside of a `&filetype` named codeblock
 ![](https://private-user-images.githubusercontent.com/2555073/423367966-e1aac0e2-0e95-4fdb-81d1-b92bb4b7cbf7.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDIxOTg4MTIsIm5iZiI6MTc0MjE5ODUxMiwicGF0aCI6Ii8yNTU1MDczLzQyMzM2Nzk2Ni1lMWFhYzBlMi0wZTk1LTRmZGItODFkMS1iOTJiYjRiN2NiZjcuZ2lmP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI1MDMxNyUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNTAzMTdUMDgwMTUyWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9MjUyMTlmNDAxMjYyNzc5MjcwNmVlNTUwMDY2N2Q0NGVlMzY5OGUyM2U1MjgxMmQzOGI5ZTEwZDg2OGMzNzJkYiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QifQ.hckZ7Swx9wszWWgdduqTRnwtrqvUPMVhqSyoSdwTny4)
+
+### Chat History
+Save and restore your chat conversations with Copilot:
+
+#### Saving Chat History
+- Use `:CopilotChatSave <name>` to save the current chat history
+- If no name is provided, a timestamp will be used automatically 
+- History files are stored in `~/.vim/copilot-chat/history/` as JSON files
+
+#### Loading Chat History
+- Use `:CopilotChatLoad <name>` to load a previously saved chat
+- If no name is provided, a list of available chat histories will be shown
+- You can also view all saved histories with `:CopilotChatList`
 
 ### Prompt Templates
 Copilot Chat supports custom prompt templates that can be quickly accessed during chat sessions. Templates allow you to save frequently used prompts and invoke them with a simple syntax.

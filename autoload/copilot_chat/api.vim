@@ -66,7 +66,7 @@ function! copilot_chat#api#handle_job_close(channel, msg) abort
   let l:separator .= repeat('━', l:width)
   call copilot_chat#buffer#append_message(l:separator)
   call copilot_chat#buffer#append_message(split(l:result, "\n"))
-  call copilot_chat#buffer#add_input_separator(g:active_chat_buffer)
+  call copilot_chat#buffer#add_input_separator()
 endfunction
 
 function! copilot_chat#api#handle_job_error(channel, msg) abort

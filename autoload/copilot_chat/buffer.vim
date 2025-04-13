@@ -30,17 +30,16 @@ function! copilot_chat#buffer#create() abort
   let s:chat_count += 1
 
   " Save buffer number for reference
-  let s:current_chat_buffer = bufnr('%')
-  call appendbufline(s:current_chat_buffer, 0, 'Welcome to Copilot Chat! Type your message below:')
-  call copilot_chat#buffer#add_input_separator(s:current_chat_buffer)
-  return s:current_chat_buffer
+  let g:active_chat_buffer = bufnr('%')
+  call copilot_chat#buffer#welcome_message()
+  return g:active_chat_buffer
 endfunction
 
-function! copilot_chat#buffer#add_input_separator(buffer) abort
+function! copilot_chat#buffer#add_input_separator() abort
   let l:width = winwidth(0) - 2
   let l:separator = ' ' . repeat('━', l:width)
-  call appendbufline(a:buffer, '$', l:separator)
-  call appendbufline(a:buffer, '$', '')
+  call copilot_chat#buffer#append_message(l:separator)
+  call copilot_chat#buffer#append_message('')
 endfunction
 
 function! copilot_chat#buffer#waiting_for_response() abort
@@ -92,4 +91,9 @@ endfunction
 
 function! copilot_chat#buffer#append_message(message) abort
   call appendbufline(g:active_chat_buffer, '$', a:message)
+endfunction
+
+function! copilot_chat#buffer#welcome_message() abort
+  call appendbufline(g:active_chat_buffer, 0, 'Welcome to Copilot Chat! Type your message below:')
+  call copilot_chat#buffer#add_input_separator()
 endfunction

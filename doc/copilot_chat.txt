@@ -14,7 +14,8 @@ CONTENTS                                               *copilot-chat-contents*
     6. Features ................................ |copilot-chat-features|
         6.1 Model Selection .................... |copilot-chat-models|
         6.2 Add Selection to Chat .............. |copilot-chat-add-selection|
-        6.3 Prompt Templates ................... |copilot-chat-templates|
+        6.3 Chat History Management ............ |copilot-chat-history|
+        6.4 Prompt Templates ................... |copilot-chat-templates|
     7. Configuration ........................... |copilot-chat-configuration|
     8. Troubleshooting ......................... |copilot-chat-troubleshooting|
 
@@ -64,6 +65,10 @@ Copilot's AI assistant directly from within their editor.
                                                         *:SubmitChatMessage*
 :SubmitChatMessage       Submits the current prompt to Copilot
 
+                                                        *:CopilotChatReset*
+:CopilotChatReset        Resets the current chat window to its initial state,
+                         clearing all conversation history
+
                                                            *:CopilotConfig*
 :CopilotConfig           Opens the 'config.json' file for modifying default
                          settings when opening a new CopilotChat window
@@ -74,6 +79,18 @@ Copilot's AI assistant directly from within their editor.
 
                                                             *:SelectModel*
 :SelectModel             Selects the current line's model as the default model
+
+                                                       *:CopilotChatSave*
+:CopilotChatSave [name]  Saves the current chat history with the provided name.
+                         If no name is provided, a timestamp will be used.
+
+                                                       *:CopilotChatLoad*
+:CopilotChatLoad [name]  Loads a previously saved chat history with the
+                         provided name. If no name is provided, shows a list
+                         of available chat histories to choose from.
+
+                                                       *:CopilotChatList*
+:CopilotChatList         Lists all saved chat histories.
 
 ==============================================================================
 5. Key Mappings                                       *copilot-chat-mappings*
@@ -122,7 +139,39 @@ This is useful for getting help, explanations, or suggestions about specific
 portions of your code.
 
 ------------------------------------------------------------------------------
-6.3 Prompt Templates                               *copilot-chat-templates*
+6.3 Chat History Management                         *copilot-chat-history*
+
+Copilot Chat allows you to save, list, and load your chat conversations:
+
+Saving Chat History:
+- Use |:CopilotChatSave| [name] to save the current chat history
+- If no name is provided, a timestamp will be used automatically
+- History files are stored in `~/.vim/copilot-chat/history/` as JSON files
+
+Loading Chat History:
+- Use |:CopilotChatLoad| [name] to load a previously saved chat
+- If no name is provided, a list of available chat histories will be shown
+- When loading a history, the current chat window content is replaced with
+  the saved conversation
+
+Listing Saved Histories:
+- Use |:CopilotChatList| to view all saved chat histories
+- This displays a list of all available chat history files with their names
+  and timestamps
+
+Example workflow:
+1. Have a productive conversation with Copilot
+2. Save it with a descriptive name: `:CopilotChatSave refactoring-tips`
+3. Later, list your saved chats with `:CopilotChatList`
+4. Load a specific conversation: `:CopilotChatLoad refactoring-tips`
+
+This feature is particularly useful for:
+- Saving important troubleshooting or educational conversations
+- Creating a library of reference conversations for common tasks
+- Continuing conversations that were interrupted
+
+------------------------------------------------------------------------------
+6.4 Prompt Templates                               *copilot-chat-templates*
 
 Copilot Chat supports custom prompt templates that can be quickly accessed
 during chat sessions:
