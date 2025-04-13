@@ -252,6 +252,18 @@ g:copilot_chat_disable_mappings                *g:copilot_chat_disable_mappings*
 
 Set to 1 to disable all the plugins default mappings.
 
+g:copilot_chat_create_on_add_selection         *g:copilot_chat_create_on_add_selection*
+
+Set to 1 to create a new chat window when adding it a visual selection to the
+chat if no chat window is open. If set to 0, no action is taken when no active
+chat window exists (default: 1).
+
+g:copilot_chat_jump_to_chat_on_add_selection   *g:copilot_chat_jump_to_chat_on_add_selection*
+
+Set to 1 to jump to the chat window when adding it a visual selection. If set
+to 0, the selection is added to the active chat window, but the user remains in
+the current window (default: 1).
+
 ==============================================================================
 8. Troubleshooting                             *copilot-chat-troubleshooting*
 

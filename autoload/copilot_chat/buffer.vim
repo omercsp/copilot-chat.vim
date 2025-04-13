@@ -118,9 +118,24 @@ function! copilot_chat#buffer#update_waiting_dots() abort
   return 1
 endfunction
 
+if !exists('g:copilot_chat_create_on_add_selection')
+  let g:copilot_chat_create_on_add_selection = 1
+endif
+
+if !exists('g:copilot_chat_jump_to_chat_on_add_selection')
+  let g:copilot_chat_jump_to_chat_on_add_selection = 1
+endif
+
 function! copilot_chat#buffer#add_selection() abort
-  if !copilot_chat#buffer#has_active_chat()
-    return
+  if copilot_chat#buffer#has_active_chat() == 0
+    if g:copilot_chat_create_on_add_selection == 0
+      return
+    endif
+    " TODO: copilot_chat#buffer#create should take an argument to
+    " indicate if it should make the new buffer active or not.
+    let l:curr_win = winnr()
+    call copilot_chat#buffer#create()
+    execute l:curr_win . 'wincmd w'
   endif
 
   " Save the current register and selection type
@@ -139,6 +154,11 @@ function! copilot_chat#buffer#add_selection() abort
   call copilot_chat#buffer#append_message('```' . l:filetype)
   call copilot_chat#buffer#append_message(split(l:selection, "\n"))
   call copilot_chat#buffer#append_message('```')
+
+  " Goto to the active chat buffer, either old or newly created.
+  if g:copilot_chat_jump_to_chat_on_add_selection == 1
+    call copilot_chat#buffer#goto_active_chat()
+  endif
 endfunction
 
 function! copilot_chat#buffer#append_message(message) abort
