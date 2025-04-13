@@ -195,3 +195,11 @@ function! copilot_chat#buffer#set_active(bufnr) abort
   " Set the active chat buffer to the current buffer
   let g:active_chat_buffer = l:bufnr
 endfunction
+
+function! copilot_chat#buffer#on_delete(bufnr) abort
+  if g:active_chat_buffer != a:bufnr
+    return
+  endif
+  " Unset the active chat buffer
+  let g:active_chat_buffer = -1
+endfunction

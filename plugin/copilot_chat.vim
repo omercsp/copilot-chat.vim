@@ -18,6 +18,11 @@ command! -nargs=0 CopilotChatList call copilot_chat#history#list()
 command! -nargs=0 CopilotChatReset call copilot_chat#reset_chat()
 command! -nargs=? CopilotChatSetActive call copilot_chat#buffer#set_active(<q-args>)
 
+augroup CopilotChat
+  autocmd!
+  autocmd FileType copilot_chat autocmd BufDelete <buffer> call copilot_chat#buffer#on_delete(expand('<abuf>'))
+augroup END
+
 if !exists('g:copilot_chat_disable_mappings')
    g:copilot_chat_disable_mappings = 0
 endif
