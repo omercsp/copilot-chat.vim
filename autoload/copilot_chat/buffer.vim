@@ -35,6 +35,23 @@ function! copilot_chat#buffer#create() abort
   return g:active_chat_buffer
 endfunction
 
+function! copilot_chat#buffer#has_active_chat() abort
+  if g:active_chat_buffer == -1
+    return 0
+  endif
+
+  if !bufexists(g:active_chat_buffer)
+    return 0
+  endif
+
+  let l:buf = getbufinfo(g:active_chat_buffer)
+  if empty(l:buf)
+    return 0
+  endif
+
+  return 1
+endfunction
+
 function! copilot_chat#buffer#add_input_separator() abort
   let l:width = winwidth(0) - 2
   let l:separator = ' ' . repeat('━', l:width)
@@ -71,6 +88,10 @@ function! copilot_chat#buffer#update_waiting_dots() abort
 endfunction
 
 function! copilot_chat#buffer#add_selection() abort
+  if !copilot_chat#buffer#has_active_chat()
+    return
+  endif
+
   " Save the current register and selection type
   let l:save_reg = @"
   let l:save_regtype = getregtype('"')
