@@ -16,6 +16,14 @@ command! -nargs=? CopilotChatLoad call copilot_chat#history#load(<q-args>)
 command! -nargs=0 CopilotChatList call copilot_chat#history#list()
 command! -nargs=0 CopilotChatReset call copilot_chat#reset_chat()
 
+if !exists('g:copilot_chat_disable_mappings')
+   g:copilot_chat_disable_mappings = 0
+endif
+
+if g:copilot_chat_disable_mappings == 1
+  finish
+endif
+
 nnoremap <leader>cc :CopilotChatOpen<CR>
 vnoremap <silent> <leader>a :<C-u>call copilot_chat#buffer#add_selection()<CR>
 
