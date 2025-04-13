@@ -9,7 +9,7 @@ function! copilot_chat#buffer#create() abort
 
   " Create split based on position
   if l:position ==# 'right'
-    vsplit
+    rightbelow vsplit
   elseif l:position ==# 'left'
     leftabove vsplit
   elseif l:position ==# 'top'
@@ -44,7 +44,7 @@ function! copilot_chat#buffer#add_input_separator(buffer) abort
 endfunction
 
 function! copilot_chat#buffer#waiting_for_response() abort
-  call appendbufline(g:active_chat_buffer, '$', 'Waiting for response')
+  call copilot_chat#buffer#append_message('Waiting for response')
   let s:waiting_timer = timer_start(500, {-> copilot_chat#buffer#update_waiting_dots()}, {'repeat': -1})
 endfunction
 
@@ -85,9 +85,9 @@ function! copilot_chat#buffer#add_selection() abort
 
   " Restore the original register and selection type
   call setreg('"', l:save_reg, l:save_regtype)
-  call appendbufline(g:active_chat_buffer, '$', '```' . l:filetype)
-  call appendbufline(g:active_chat_buffer, '$', split(l:selection, "\n"))
-  call appendbufline(g:active_chat_buffer, '$', '```')
+  call copilot_chat#buffer#append_message('```' . l:filetype)
+  call copilot_chat#buffer#append_message(split(l:selection, "\n"))
+  call copilot_chat#buffer#append_message('```')
 endfunction
 
 function! copilot_chat#buffer#append_message(message) abort
