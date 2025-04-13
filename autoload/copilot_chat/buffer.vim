@@ -169,3 +169,29 @@ function! copilot_chat#buffer#welcome_message() abort
   call appendbufline(g:active_chat_buffer, 0, 'Welcome to Copilot Chat! Type your message below:')
   call copilot_chat#buffer#add_input_separator()
 endfunction
+
+function! copilot_chat#buffer#set_active(bufnr) abort
+  let l:bufnr = a:bufnr
+  if l:bufnr ==# ''
+    let l:bufnr = bufnr('%')
+  endif
+
+  if g:active_chat_buffer == l:bufnr
+    return
+  endif
+
+  let bufinfo = getbufinfo(l:bufnr)
+  if empty(bufinfo)
+    echom 'Invlid buffer number'
+    return
+  endif
+
+  " Check if the buffer is valid
+  if getbufvar(l:bufnr, '&filetype') !=# 'copilot_chat'
+    echom 'Buffer is not a Copilot Chat buffer'
+    return
+  endif
+
+  " Set the active chat buffer to the current buffer
+  let g:active_chat_buffer = l:bufnr
+endfunction

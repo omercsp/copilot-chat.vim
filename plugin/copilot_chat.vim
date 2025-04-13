@@ -16,6 +16,7 @@ command! -nargs=? CopilotChatSave call copilot_chat#history#save(<q-args>)
 command! -nargs=? CopilotChatLoad call copilot_chat#history#load(<q-args>)
 command! -nargs=0 CopilotChatList call copilot_chat#history#list()
 command! -nargs=0 CopilotChatReset call copilot_chat#reset_chat()
+command! -nargs=? CopilotChatSetActive call copilot_chat#buffer#set_active(<q-args>)
 
 if !exists('g:copilot_chat_disable_mappings')
    g:copilot_chat_disable_mappings = 0

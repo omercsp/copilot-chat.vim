@@ -30,6 +30,7 @@ Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nv
 | `:CopilotChatSave <name>?` | Save chat history (uses timestamp if no name provided) |
 | `:CopilotChatLoad <name>?` | Load chat history (shows list of saved histories if no name provided) |
 | `:CopilotChatList` | List all saved chat histories |
+| `:CopilotChatSetActive <bufnr>?` | Sets the active chat window to the buffer number provided (default is the current buffer) |
 
 ## Key Mappings
 | Location | Insert | Normal | Visual | Action |
