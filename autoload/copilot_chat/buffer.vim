@@ -49,7 +49,18 @@ function! copilot_chat#buffer#waiting_for_response() abort
 endfunction
 
 function! copilot_chat#buffer#update_waiting_dots() abort
-  let l:current_text = getbufline(g:active_chat_buffer, '$')[0]
+  if !bufexists(g:active_chat_buffer)
+    call timer_stop(s:waiting_timer)
+    return 0
+  endif
+
+  let l:lines = getbufline(g:active_chat_buffer, '$')
+  if empty(l:lines)
+    call timer_stop(s:waiting_timer)
+    return 0
+  endif
+
+  let l:current_text = l:lines[0]
   if l:current_text =~? '^Waiting for response'
       let l:dots = len(matchstr(l:current_text, '\..*$'))
       let l:new_dots = (l:dots % 3) + 1
@@ -77,4 +88,8 @@ function! copilot_chat#buffer#add_selection() abort
   call appendbufline(g:active_chat_buffer, '$', '```' . l:filetype)
   call appendbufline(g:active_chat_buffer, '$', split(l:selection, "\n"))
   call appendbufline(g:active_chat_buffer, '$', '```')
+endfunction
+
+function! copilot_chat#buffer#append_message(message) abort
+  call appendbufline(g:active_chat_buffer, '$', a:message)
 endfunction

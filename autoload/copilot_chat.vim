@@ -8,6 +8,12 @@ function! copilot_chat#open_chat() abort
   normal! G
 endfunction
 
+function! copilot_chat#start_chat(message) abort
+  call copilot_chat#open_chat()
+  call copilot_chat#buffer#append_message(a:message)
+  call copilot_chat#api#async_request(a:message)
+endfunction
+
 function! copilot_chat#submit_message() abort
   let l:separator_line = search(' ━\+$', 'nw')
   let l:start_line = l:separator_line + 1

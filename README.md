@@ -21,7 +21,8 @@ Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nv
 ## Commands
 | Command | Description |
 | ------- | ----------- |
-| `:CopilotChatOpen` | Opens a new copilot window (default vsplit right) |
+| `:CopilotChat <input>` | Launches a new Copilot chat with your input as the initial prompt |
+| `:CopilotChatOpen` | Opens a new Copilot chat window (default vsplit right) |
 | `:CopilotConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
 | `:CopilotModels` | View available modes / select active model |
 
@@ -38,7 +39,7 @@ Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nv
 Using vim-plug, Vundle, or any other plugin manager. 
 
 ## Setup
-1. Run `:CopilotChat` to open a chat window. You will be prompted to setup your device on first use.
+1. Run `:CopilotChatOpen` to open a chat window. You will be prompted to setup your device on first use.
 2. Write your prompt under the line separator and press `<Enter>` in normal mode / `:SubmitChatMessage`
 3. You should see a `Waiting for response..` in the buffer to indicate work is being done in the background
 4. 🎉!
