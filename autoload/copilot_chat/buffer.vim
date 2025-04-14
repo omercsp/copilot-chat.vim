@@ -197,9 +197,18 @@ function! copilot_chat#buffer#set_active(bufnr) abort
 endfunction
 
 function! copilot_chat#buffer#on_delete(bufnr) abort
+  if g:copilot_chat_zombie_buffer != -1
+	let l:bufinfo = getbufinfo(g:copilot_chat_zombie_buffer)
+	if !empty(l:bufinfo) " Check if the buffer wasn't wiped out by the user
+		execute 'bwipeout' . g:copilot_chat_zombie_buffer
+	endif
+	let g:copilot_chat_zombie_buffer = -1
+  endif
+
   if g:active_chat_buffer != a:bufnr
     return
   endif
   " Unset the active chat buffer
+  let g:copilot_chat_zombie_buffer = g:active_chat_buffer
   let g:active_chat_buffer = -1
 endfunction
