@@ -1,5 +1,5 @@
-let s:device_token_file = expand('~/.vim/copilot-chat/.device_token')
-let s:chat_token_file = expand('~/.vim/copilot-chat/.chat_token')
+let s:device_token_file = g:copilot_chat_data_dir .  '/.device_token'
+let s:chat_token_file = g:copilot_chat_data_dir . '/.chat_token'
 
 function! copilot_chat#auth#verify_signin() abort
   let l:chat_token = copilot_chat#auth#get_chat_token(v:false)

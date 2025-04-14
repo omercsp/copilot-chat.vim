@@ -1,5 +1,9 @@
 scriptencoding utf-8
 
+if !exists('g:copilot_chat_data_dir')
+  let g:copilot_chat_data_dir = expand('~/.vim/copilot-chat')
+endif
+
 if !exists('g:copilot_reuse_active_chat')
   let g:copilot_reuse_active_chat = 0
 endif
