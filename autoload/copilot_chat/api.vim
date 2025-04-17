@@ -13,7 +13,7 @@ function! copilot_chat#api#async_request(message) abort
   let l:messages = [{'content': a:message, 'role': 'user'}]
   let l:data = json_encode({
         \ 'intent': v:false,
-        \ 'model': g:copilot_chat_default_model,
+        \ 'model': copilot_chat#config#model(),
         \ 'temperature': 0,
         \ 'top_p': 1,
         \ 'n': 1,
