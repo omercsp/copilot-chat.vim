@@ -1,40 +1,43 @@
 let s:chat_config_file = g:copilot_chat_data_dir . '/config.json'
+let s:config_data = ''
 
+" Generic configuration functions
+" -------------------------------
 function! copilot_chat#config#create_data_dir() abort
   if !isdirectory(g:copilot_chat_data_dir)
     call mkdir(g:copilot_chat_data_dir, 'p')
   endif
 endfunction
 
-function! copilot_chat#config#load() abort
-  call copilot_chat#config#create_data_dir()
+function! copilot_chat#config#read_configuration() abort
   if filereadable(s:chat_config_file)
-    let l:config = json_decode(join(readfile(s:chat_config_file), "\n"))
-    let g:default_model = l:config.model
-    let s:prompts = l:config.prompts
+    let l:raw_data = join(readfile(s:chat_config_file), '\n')
   else
-    let l:config = {'model': g:default_model, 'prompts': '[]'}
-    call writefile([json_encode(l:config)], s:chat_config_file)
+    let l:raw_data = '{}'
   endif
+  let s:config_data = json_decode(l:raw_data)
 endfunction
 
-function! copilot_chat#config#get(key, default) abort
-  let l:var_name = 'g:copilot_chat_' . a:key
-  if exists(l:var_name)
-    return eval(l:var_name)
-  endif
+function! copilot_chat#config#save_config_file() abort
+  call copilot_chat#config#create_data_dir()
+  call writefile([json_encode(s:config_data)], s:chat_config_file)
+endfunction
 
-  if exists('s:' . a:key)
-    return eval('s:' . a:key)
-  endif
+function! copilot_chat#config#get(key, default='') abort
+  return get(s:config_data, a:key, a:default)
+endfunction
 
-  return a:default
+function! copilot_chat#config#set_value(key, value) abort
+  let s:config_data[a:key] = a:value
+  call copilot_chat#config#save_config_file()
 endfunction
 
 function! copilot_chat#config#view() abort
   execute 'vsplit ' . s:chat_config_file
 endfunction
 
+" Model selection
+" ---------------
 function! copilot_chat#config#view_models() abort
   vsplit
   enew
@@ -49,11 +52,7 @@ function! copilot_chat#config#view_models() abort
 endfunction
 
 function! copilot_chat#config#select_model() abort
-  let l:selected_model = getline('.')
-  let g:default_model = l:selected_model
-  let l:config = json_decode(join(readfile(s:chat_config_file), "\n"))
-  let l:config.model = l:selected_model
-  call writefile([json_encode(l:config)], s:chat_config_file)
+  call copilot_chat#config#set_value('model', getline('.'))
 endfunction
 
 " vim:set ft=vim sw=2 sts=2 et:

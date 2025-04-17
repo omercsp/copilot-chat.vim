@@ -1,5 +1,6 @@
 scriptencoding utf-8
 
+call copilot_chat#config#read_configuration()
 let g:prompts = {}
 let g:active_chat_buffer = -1
 let g:default_model = 'gpt-4o'
@@ -22,6 +23,7 @@ command! -nargs=? CopilotChatLoad call copilot_chat#history#load(<q-args>)
 command! -nargs=0 CopilotChatList call copilot_chat#history#list()
 command! -nargs=0 CopilotChatReset call copilot_chat#reset_chat()
 command! -nargs=? CopilotChatSetActive call copilot_chat#buffer#set_active(<q-args>)
+command! -nargs=0 CopilotReadConfiguration call copilot_chat#config#read_configuration()
 
 vnoremap <silent> <Plug>CopilotChatAddSelection :<C-u>call copilot_chat#buffer#add_selection()<CR>
 
