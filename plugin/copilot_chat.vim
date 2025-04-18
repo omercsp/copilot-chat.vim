@@ -7,7 +7,7 @@ let g:copilot_chat_available_models = []
 
 command! -nargs=0 CopilotChatOpen call copilot_chat#open_chat()
 command! -nargs=1 CopilotChat call copilot_chat#start_chat(<q-args>)
-command! -nargs=0 CopilotGotoChat call copilot_chat#buffer#goto_active_chat()
+command! -nargs=0 CopilotChatFocus call copilot_chat#buffer#focus_active_chat()
 command! -nargs=0 CopilotSubmit call copilot_chat#submit_message()
 command! -nargs=0 CopilotConfig call copilot_chat#config#view()
 command! -nargs=0 CopilotModels call copilot_chat#config#view_models()

@@ -56,7 +56,7 @@ function! copilot_chat#buffer#has_active_chat() abort
   return 1
 endfunction
 
-function! copilot_chat#buffer#goto_active_chat() abort
+function! copilot_chat#buffer#focus_active_chat() abort
   let l:current_buf = bufnr('%')
   if copilot_chat#buffer#has_active_chat() == 0
     return
@@ -157,7 +157,7 @@ function! copilot_chat#buffer#add_selection() abort
 
   " Goto to the active chat buffer, either old or newly created.
   if g:copilot_chat_jump_to_chat_on_add_selection == 1
-    call copilot_chat#buffer#goto_active_chat()
+    call copilot_chat#buffer#focus_active_chat()
   endif
 endfunction
 

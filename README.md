@@ -78,7 +78,7 @@ filetype plugin indent on
 | ------- | ----------- |
 | `:CopilotChat <input>` | Launches a new Copilot chat with your input as the initial prompt |
 | `:CopilotChatOpen` | Opens a new Copilot chat window (default vsplit right) |
-| `:CopilotGotoChat` | Opens the currently active chat window |
+| `:CopilotChatFocus` | Focuses the currently active chat window |
 | `:CopilotChatReset` | Resets the current chat window |
 | `:CopilotConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
 | `:CopilotModels` | View available modes / select active model |
