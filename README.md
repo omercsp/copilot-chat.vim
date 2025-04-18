@@ -23,12 +23,14 @@ Nvim folks will be able to use [CopilotChat.nvim](https://github.com/CopilotC-Nv
 | ------- | ----------- |
 | `:CopilotChat <input>` | Launches a new Copilot chat with your input as the initial prompt |
 | `:CopilotChatOpen` | Opens a new Copilot chat window (default vsplit right) |
+| `:CopilotGotoChat` | Opens the currently active chat window |
 | `:CopilotChatReset` | Resets the current chat window |
 | `:CopilotConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
 | `:CopilotModels` | View available modes / select active model |
 | `:CopilotChatSave <name>?` | Save chat history (uses timestamp if no name provided) |
 | `:CopilotChatLoad <name>?` | Load chat history (shows list of saved histories if no name provided) |
 | `:CopilotChatList` | List all saved chat histories |
+| `:CopilotChatSetActive <bufnr>?` | Sets the active chat window to the buffer number provided (default is the current buffer) |
 
 ## Key Mappings
 | Location | Insert | Normal | Visual | Action |
