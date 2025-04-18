@@ -63,7 +63,7 @@ function! copilot_chat#auth#get_bearer_token() abort
         \ 'Editor-Version: vim/9.0.1',
         \ 'Content-Type: application/json',
         \ ]
-      
+
     let l:access_token_response = copilot_chat#http('POST', l:token_poll_url, l:token_headers, l:token_poll_data)
     let l:json_response = json_decode(l:access_token_response)
     let l:bearer_token = l:json_response.access_token
@@ -90,3 +90,5 @@ function! copilot_chat#auth#get_device_token() abort
 
   return copilot_chat#http('POST', l:token_url, l:headers, l:data)
 endfunction
+
+" vim:set ft=vim sw=2 sts=2 et:

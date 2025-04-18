@@ -212,3 +212,5 @@ function! copilot_chat#buffer#on_delete(bufnr) abort
   let g:copilot_chat_zombie_buffer = g:active_chat_buffer
   let g:active_chat_buffer = -1
 endfunction
+
+" vim:set ft=vim sw=2 sts=2 et:

@@ -24,7 +24,7 @@ augroup CopilotChat
 augroup END
 
 if !exists('g:copilot_chat_disable_mappings')
-   g:copilot_chat_disable_mappings = 0
+  let g:copilot_chat_disable_mappings = 0
 endif
 
 if g:copilot_chat_disable_mappings == 1
