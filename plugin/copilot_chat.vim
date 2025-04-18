@@ -1,9 +1,9 @@
 scriptencoding utf-8
 
-let g:prompts = {}
-let g:active_chat_buffer = -1
-let g:default_model = 'gpt-4o'
-let g:available_models = []
+let g:copilot_chat_prompts = {}
+let g:copilot_chat_active_buffer = -1
+let g:copilot_chat_default_model = 'gpt-4o'
+let g:copilot_chat_available_models = []
 
 command! -nargs=0 CopilotChatOpen call copilot_chat#open_chat()
 command! -nargs=1 CopilotChat call copilot_chat#start_chat(<q-args>)
