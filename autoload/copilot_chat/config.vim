@@ -45,7 +45,7 @@ function! copilot_chat#config#view_models() abort
   call appendbufline(bufnr('%'), '$', g:copilot_chat_available_models)
   execute 'syntax match ActiveModel /^' . g:copilot_chat_default_model . '$/'
   execute 'highlight ActiveModel guifg=#33FF33 ctermfg=46'
-  nnoremap <buffer> <CR> :SelectModel<CR>
+  nnoremap <buffer> <CR> :CopilotChatSelectModel<CR>
 endfunction
 
 function! copilot_chat#config#select_model() abort

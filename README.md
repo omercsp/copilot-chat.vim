@@ -80,8 +80,8 @@ filetype plugin indent on
 | `:CopilotChatOpen` | Opens a new Copilot chat window (default vsplit right) |
 | `:CopilotChatFocus` | Focuses the currently active chat window |
 | `:CopilotChatReset` | Resets the current chat window |
-| `:CopilotConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
-| `:CopilotModels` | View available modes / select active model |
+| `:CopilotChatConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
+| `:CopilotChatModels` | View available modes / select active model |
 | `:CopilotChatSave <name>?` | Save chat history (uses timestamp if no name provided) |
 | `:CopilotChatLoad <name>?` | Load chat history (shows list of saved histories if no name provided) |
 | `:CopilotChatList` | List all saved chat histories |
@@ -115,7 +115,7 @@ vmap <leader>a <Plug>CopilotChatAddSelection
 ## Features
 
 ### Model Selection
-`:CopilotModels` brings up a buffer for of all the available models for you to choose from. Simply press `<Enter>` in normal mode on the model you would like to use. New chats will use the selected model.
+`:CopilotChatModels` brings up a buffer for of all the available models for you to choose from. Simply press `<Enter>` in normal mode on the model you would like to use. New chats will use the selected model.
 
 ### Add Selection to Chat
 By default, this is configured to `<Leader>a` when in visual mode.
@@ -144,7 +144,7 @@ Copilot Chat supports custom prompt templates that can be quickly accessed durin
 - Example: `> explain` would expand to the full explanation template
 
 #### Managing Prompts
-1. Open the config with `:CopilotConfig`
+1. Open the config with `:CopilotChatConfig`
 2. Add prompts to the `prompts` object in `config.json`:
 ```json
 {
