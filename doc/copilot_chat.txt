@@ -291,3 +291,5 @@ Connection issues:
 
 If you continue to experience issues, please visit the GitHub repository:
 https://github.com/DanBradbury/copilot-chat.vim
+
+  vim:tw=78:et:ft=help:norl:
