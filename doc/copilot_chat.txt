@@ -47,8 +47,8 @@ Copilot's AI assistant directly from within their editor.
    - Visit the URL in your browser and enter the code
    - Return to Vim and press Enter to continue
 
-3. Write your prompt under the line separator and press <Enter> in normal mode
-   or use |:SubmitChatMessage|
+3. Write your prompt under the line separator and press <Enter> in normal
+   mode to submit it.
 
 4. You should see "Waiting for response.." in the buffer to indicate work is
    being done in the background
@@ -64,9 +64,6 @@ Copilot's AI assistant directly from within their editor.
                                                         *:CopilotChat*
 :CopilotChat [input]     Launches a new Copilot chat with your input as the 
                          initial prompt
-
-                                                        *:SubmitChatMessage*
-:SubmitChatMessage       Submits the current prompt to Copilot
 
                                                         *:CopilotChatReset*
 :CopilotChatReset        Resets the current chat window to its initial state,

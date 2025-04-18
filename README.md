@@ -69,7 +69,7 @@ filetype plugin indent on
 
 ## Setup
 1. Run `:CopilotChatOpen` to open a chat window. You will be prompted to setup your device on first use.
-2. Write your prompt under the line separator and press `<Enter>` in normal mode / `:SubmitChatMessage`.
+2. Write your prompt under the line separator and press `<Enter>` in normal mode.
 3. You should see a `Waiting for response..` in the buffer to indicate work is being done in the background.
 4. 🎉🎉🎉
 
