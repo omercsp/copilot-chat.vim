@@ -58,26 +58,26 @@ Copilot's AI assistant directly from within their editor.
 ==============================================================================
 4. Commands                                           *copilot-chat-commands*
 
-                                                              *:CopilotChatOpen*
+                                                      *:CopilotChatOpen*
 :CopilotChatOpen         Opens a new Copilot Chat window (default vsplit right)
 
-                                                        *:CopilotChat*
+                                                      *:CopilotChat*
 :CopilotChat [input]     Launches a new Copilot chat with your input as the 
                          initial prompt
 
-                                                        *:CopilotChatReset*
+                                                      *:CopilotChatReset*
 :CopilotChatReset        Resets the current chat window to its initial state,
                          clearing all conversation history
 
-                                                           *:CopilotChatConfig*
+                                                      *:CopilotChatConfig*
 :CopilotChatConfig       Opens the 'config.json' file for modifying default
                          settings when opening a new CopilotChat window
 
-                                                           *:CopilotChatModels*
+                                                      *:CopilotChatModels*
 :CopilotChatModels       Views available models and allows selecting the active
                          model for future chats
 
-                                                            *:CopilotChatSelectModel*
+                                                      *:CopilotChatSelectModel*
 :CopilotChatSelectModel  Selects the current line's model as the default model
 
                                                        *:CopilotChatSave*
