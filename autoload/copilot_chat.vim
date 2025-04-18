@@ -36,14 +36,14 @@ function! copilot_chat#reset_chat() abort
   endif
 
   let l:current_buf = bufnr('%')
-  
+
   " Switch to the active chat buffer if not already there
   if l:current_buf != g:active_chat_buffer
     execute 'buffer ' . g:active_chat_buffer
   endif
 
   silent! %delete _
-  
+
   call copilot_chat#buffer#welcome_message()
 
   normal! G
@@ -111,3 +111,5 @@ function! copilot_chat#http(method, url, headers, body) abort
   endif
   return l:response
 endfunction
+
+" vim:set ft=vim sw=2 sts=2 et:
