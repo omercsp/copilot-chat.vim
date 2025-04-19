@@ -43,3 +43,23 @@ If you get errors be sure to fix them before committing.
 
 [issues]: https://github.com/DanBradbury/copilot-chat.vim/issues
 [PRs]: https://github.com/DanBradbury/copilot-chat.vim/pulls
+
+## Maintainer Merge Policy (for maintainers only)
+To ensure a clean and linear commit history, we follow a rebase-and-push policy. Maintainers do not use GitHub's "Merge Pull Request" button.
+
+### How maintainers merge PRs
+1. Fetch the contributor’s branch
+```
+git remote add contributor https://github.com/username/their-fork.git
+git fetch contributor
+git checkout -b pr-branch contributor/branch-name
+```
+2. Rebase onto `main` (squash / reword as needed `git rebase -i origin/main`)
+3. Push to `main`
+```
+git checkout main
+git merge --ff-only pr-branch
+git push origin main
+```
+4. Close open PR on GitHub with comment referencing the commit
+> Merged via rebase in commit `abcd123`
