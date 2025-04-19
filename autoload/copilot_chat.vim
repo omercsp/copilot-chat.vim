@@ -102,4 +102,11 @@ function! copilot_chat#http(method, url, headers, body) abort
   return l:response
 endfunction
 
+function copilot_chat#set_scratch_buffer()
+  enew
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal noswapfile
+endfunction
+
 " vim:set ft=vim sw=2 sts=2 et:

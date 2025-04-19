@@ -40,10 +40,7 @@ endfunction
 " ---------------
 function! copilot_chat#config#view_models() abort
   vsplit
-  enew
-  setlocal buftype=nofile
-  setlocal bufhidden=hide
-  setlocal noswapfile
+  call copilot_chat#set_scratch_buffer()
   call appendbufline(bufnr('%'), 0, 'Available Models:')
   call appendbufline(bufnr('%'), '$', g:available_models)
   execute 'syntax match ActiveModel /^' . g:default_model . '$/'

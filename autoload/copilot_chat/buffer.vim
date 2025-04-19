@@ -21,12 +21,7 @@ endfunction
 
 function! copilot_chat#buffer#create() abort
   call copilot_chat#buffer#winsplit()
-
-  enew
-
-  setlocal buftype=nofile
-  setlocal bufhidden=hide
-  setlocal noswapfile
+  call copilot_chat#set_scratch_buffer()
   setlocal filetype=copilot_chat
 
   " Set buffer name
