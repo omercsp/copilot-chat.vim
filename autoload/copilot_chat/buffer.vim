@@ -84,7 +84,7 @@ function! copilot_chat#buffer#focus_active_chat() abort
 endfunction
 
 function! copilot_chat#buffer#add_input_separator() abort
-  let l:width = winwidth(0) - 2
+  let l:width = winwidth(0) - 2 - getwininfo(win_getid())[0].textoff
   let l:separator = ' ' . repeat('━', l:width)
   call copilot_chat#buffer#append_message(l:separator)
   call copilot_chat#buffer#append_message('')
