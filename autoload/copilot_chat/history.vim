@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-let s:history_dir = expand('~/.vim/copilot-chat/history')
+let s:history_dir = expand('~/.vim/copilot-chat/history', 1)
 
 function! copilot_chat#history#save(name) abort
   if !isdirectory(s:history_dir)

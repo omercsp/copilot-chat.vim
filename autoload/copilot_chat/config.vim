@@ -1,4 +1,4 @@
-let s:config_dir = expand('~/.vim/copilot-chat')
+let s:config_dir = expand('~/.vim/copilot-chat', 1)
 let s:chat_config_file = s:config_dir . '/config.json'
 
 function! copilot_chat#config#load() abort
