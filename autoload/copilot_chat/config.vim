@@ -51,7 +51,11 @@ endfunction
 function! copilot_chat#config#select_model() abort
   let l:selected_model = getline('.')
   let g:copilot_chat_default_model = l:selected_model
-  let l:config = json_decode(join(readfile(s:chat_config_file), "\n"))
+  if (filereadable(s:chat_config_file))
+    let l:config = json_decode(join(readfile(s:chat_config_file), "\n"))
+  else
+    let l:config = {}
+  endif
   let l:config.model = l:selected_model
   call writefile([json_encode(l:config)], s:chat_config_file)
 endfunction
