@@ -61,7 +61,7 @@ function! copilot_chat#api#handle_job_close(channel, msg) abort
     endif
   endfor
 
-  let l:width = winwidth(0)-2
+  let l:width = winwidth(0) - 2 - getwininfo(win_getid())[0].textoff
   let l:separator = ' '
   let l:separator .= repeat('━', l:width)
   call copilot_chat#buffer#append_message(l:separator)
