@@ -35,6 +35,7 @@ function! copilot_chat#buffer#create() abort
 
   " Save buffer number for reference
   let g:copilot_chat_active_buffer = bufnr('%')
+  let b:added_syntaxes = []
   call copilot_chat#buffer#welcome_message()
   return g:copilot_chat_active_buffer
 endfunction
@@ -230,6 +231,71 @@ function! copilot_chat#buffer#resize() abort
 
   exec 'normal!' currtab . 'gt'
   exec currwin . 'wincmd w'
+endfunction
+
+function! copilot_chat#buffer#apply_code_block_syntax() abort
+  let lines = getline(1, '$')
+  let total_lines = len(lines)
+
+  let in_code_block = 0
+  let current_lang = ''
+  let start_line = 0
+  let block_count = 0
+
+  for linenum in range(total_lines)
+    let line = lines[linenum]
+
+    if !in_code_block && line =~# '^```\s*\([a-zA-Z0-9_+-]\+\)$'
+      let in_code_block = 1
+      let current_lang = matchstr(line, '^```\s*\zs[a-zA-Z0-9_+-]\+\ze$')
+      let start_line = linenum + 1  " Start on next line
+
+    elseif in_code_block && line =~# '^```\s*$'
+      let end_line = linenum
+
+      if start_line < end_line
+        call copilot_chat#buffer#highlight_code_block(start_line, end_line, current_lang, block_count)
+        let block_count += 1
+      endif
+
+      let in_code_block = 0
+      let current_lang = ''
+    endif
+  endfor
+  redraw
+endfunction
+
+function! copilot_chat#buffer#highlight_code_block(start_line, end_line, lang, block_id) abort
+  let lang = a:lang
+
+  " Handle common aliases
+  if lang ==# 'js'
+    let lang = 'javascript'
+  elseif lang ==# 'ts'
+    let lang = 'typescript'
+  elseif lang ==# 'py'
+    let lang = 'python'
+  endif
+
+  let syn_group = 'CopilotCode_' . lang . '_' . a:block_id
+
+  let syntax_file = findfile('syntax/' . lang . '.vim', &runtimepath)
+  if !empty(syntax_file)
+    if index(b:added_syntaxes, '@' . lang) == -1
+      if exists('b:current_syntax')
+        unlet b:current_syntax
+      endif
+      execute 'syntax include @' . lang . ' ' . syntax_file
+
+      call add(b:added_syntaxes, '@' . lang)
+    endif
+    " Define syntax region for this specific code block
+    let cmd = 'syntax region ' . syn_group
+    let cmd .= ' start=/\%' . (a:start_line + 1) . 'l/'
+    let cmd .= ' end=/\%' . (a:end_line + 1) . 'l/'
+    let cmd .= ' contains=@' . lang
+    execute cmd
+  endif
 endfunction
 
 " vim:set ft=vim sw=2 sts=2 et:

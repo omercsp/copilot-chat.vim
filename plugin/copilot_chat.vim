@@ -28,6 +28,7 @@ vnoremap <silent> <Plug>CopilotChatAddSelection :<C-u>call copilot_chat#buffer#a
 augroup CopilotChat
   autocmd!
   autocmd FileType copilot_chat autocmd BufDelete <buffer> call copilot_chat#buffer#on_delete(expand('<abuf>'))
+  autocmd FileType copilot_chat autocmd BufEnter,TextChanged,TextChangedI <buffer> call copilot_chat#buffer#apply_code_block_syntax()
   autocmd VimResized,WinResized * call copilot_chat#buffer#resize()
 augroup END
 

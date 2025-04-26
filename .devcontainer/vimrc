@@ -9,3 +9,5 @@ Plugin 'DanBradbury/copilot-chat.vim'
 Plugin 'junegunn/vader.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+vmap <leader>a <Plug>CopilotChatAddSelection
