@@ -205,4 +205,31 @@ function! copilot_chat#buffer#on_delete(bufnr) abort
   let g:copilot_chat_active_buffer = -1
 endfunction
 
+function! copilot_chat#buffer#resize() abort
+  if g:copilot_chat_active_buffer == -1
+    return
+  endif
+
+  let currwin = winnr()
+  let currtab = tabpagenr()
+
+  for tabnr in range(1, tabpagenr('$'))
+    exec 'normal!' tabnr . 'gt'
+    for winnr in range(1, winnr('$'))
+      exec winnr . 'wincmd w'
+      if &filetype !=# 'copilot_chat'
+        continue
+      endif
+      let l:width = winwidth(0) - 2 - getwininfo(win_getid())[0].textoff
+      let curpos = getcurpos()
+      exec '%s/^ ━\+/ ' . repeat('━', l:width) . '/ge'
+      exec '%s/^ ━\+/ ' . repeat('━', l:width) . '/ge'
+      call setpos('.', curpos)
+    endfor
+  endfor
+
+  exec 'normal!' currtab . 'gt'
+  exec currwin . 'wincmd w'
+endfunction
+
 " vim:set ft=vim sw=2 sts=2 et:
