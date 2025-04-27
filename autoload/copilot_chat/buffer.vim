@@ -211,11 +211,12 @@ function! copilot_chat#buffer#resize() abort
     return
   endif
 
-  let currwin = winnr()
   let currtab = tabpagenr()
 
   for tabnr in range(1, tabpagenr('$'))
     exec 'normal!' tabnr . 'gt'
+    let currwin = winnr()
+
     for winnr in range(1, winnr('$'))
       exec winnr . 'wincmd w'
       if &filetype !=# 'copilot_chat'
@@ -227,10 +228,11 @@ function! copilot_chat#buffer#resize() abort
       exec '%s/^ ━\+/ ' . repeat('━', l:width) . '/ge'
       call setpos('.', curpos)
     endfor
+
+    exec currwin . 'wincmd w'
   endfor
 
   exec 'normal!' currtab . 'gt'
-  exec currwin . 'wincmd w'
 endfunction
 
 function! copilot_chat#buffer#apply_code_block_syntax() abort
