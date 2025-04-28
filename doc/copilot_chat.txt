@@ -62,7 +62,7 @@ Copilot's AI assistant directly from within their editor.
 :CopilotChatOpen         Opens a new Copilot Chat window (default vsplit right)
 
                                                       *:CopilotChat*
-:CopilotChat [input]     Launches a new Copilot chat with your input as the 
+:CopilotChat [input]     Launches a new Copilot chat with your input as the
                          initial prompt
 
                                                       *:CopilotChatReset*
@@ -76,9 +76,6 @@ Copilot's AI assistant directly from within their editor.
                                                       *:CopilotChatModels*
 :CopilotChatModels       Views available models and allows selecting the active
                          model for future chats
-
-                                                      *:CopilotChatSelectModel*
-:CopilotChatSelectModel  Selects the current line's model as the default model
 
                                                        *:CopilotChatSave*
 :CopilotChatSave [name]  Saves the current chat history with the provided name.

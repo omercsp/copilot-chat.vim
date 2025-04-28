@@ -81,7 +81,7 @@ filetype plugin indent on
 | `:CopilotChatFocus` | Focuses the currently active chat window |
 | `:CopilotChatReset` | Resets the current chat window |
 | `:CopilotChatConfig` | Open `config.json` for default settings when opening a new CopilotChat window |
-| `:CopilotChatModels` | View available modes / select active model |
+| `:CopilotChatModels` | View available models / select active model |
 | `:CopilotChatSave <name>?` | Save chat history (uses timestamp if no name provided) |
 | `:CopilotChatLoad <name>?` | Load chat history (shows list of saved histories if no name provided) |
 | `:CopilotChatList` | List all saved chat histories |
@@ -96,7 +96,7 @@ filetype plugin indent on
 | Location | Insert | Normal | Visual | Action |
 | ---- | ---- | ---- | ---- | ---- |
 | Chat window| - | `<CR>` | - | Submit current prompt |
-| Models list | - | `<CR>` | - | Select the model on the current line for future chat use |
+| Models selection popup | - | `<CR>` | `<Space>` | - | Select the model on the current line for future chat use |
 
 ## User Key mappings
 The plugin avoids adding any default vim key mappings to prevent conflict with
@@ -115,7 +115,7 @@ vmap <leader>a <Plug>CopilotChatAddSelection
 ## Features
 
 ### Model Selection
-`:CopilotChatModels` brings up a buffer for of all the available models for you to choose from. Simply press `<Enter>` in normal mode on the model you would like to use. New chats will use the selected model.
+`:CopilotChatModels` brings up a popup menu for of all the available models for you to choose from. Press `<Enter>` or `<Space>` to select the highlighted model. New chats will use the selected model.
 
 ### Add Selection to Chat
 By default, this is configured to `<Leader>a` when in visual mode.
