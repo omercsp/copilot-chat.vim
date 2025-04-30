@@ -7,8 +7,6 @@ function! copilot_chat#api#async_request(message) abort
   let s:curl_output = []
   let l:url = 'https://api.githubcopilot.com/chat/completions'
 
-  call copilot_chat#buffer#waiting_for_response()
-
   " for knowledge bases its just an attachment as the content
   "{'content': '<attachment id="kb:Name">\n#kb:\n</attachment>', 'role': 'user'}
   " for files similar
@@ -38,9 +36,9 @@ function! copilot_chat#api#async_request(message) abort
 
   if has('nvim')
     let job = jobstart(l:curl_cmd, {
-      \ 'on_stdout': function('copilot_chat#api#handle_job_output'),
-      \ 'on_exit': function('copilot_chat#api#handle_job_close'),
-      \ 'on_stderr': function('copilot_chat#api#handle_job_error'),
+      \ 'on_stdout': {chan_id, data, name->copilot_chat#api#handle_job_output(chan_id, data)},
+      \ 'on_exit': {chan_id, data, name->copilot_chat#api#handle_job_close(chan_id, data)},
+      \ 'on_stderr': {chan_id, data, name->copilot_chat#api#handle_job_error(chan_id, data)},
       \ 'stdout_buffered': v:true,
       \ 'stderr_buffered': v:true
       \ })
@@ -51,28 +49,24 @@ function! copilot_chat#api#async_request(message) abort
       \ 'err_cb': function('copilot_chat#api#handle_job_error')
       \ })
   endif
+  call copilot_chat#buffer#waiting_for_response()
 
   return job
 endfunction
 
-function! copilot_chat#api#handle_job_output(...) abort
-  if a:0 < 2
-    return
-  endif
-
-  let l:msg = a:2
-  if type(l:msg) == v:t_list
-    for data in l:msg
+function! copilot_chat#api#handle_job_output(channel, msg) abort
+  if type(a:msg) == v:t_list
+    for data in a:msg
       if data =~? '^data: {'
         call add(s:curl_output, data)
       endif
     endfor
   else
-    call add(s:curl_output, l:msg)
+    call add(s:curl_output, a:msg)
   endif
 endfunction
 
-function! copilot_chat#api#handle_job_close(...) abort
+function! copilot_chat#api#handle_job_close(channel, msg) abort
   call deletebufline(g:copilot_chat_active_buffer, '$')
   let l:result = ''
   for line in s:curl_output
@@ -97,16 +91,14 @@ function! copilot_chat#api#handle_job_close(...) abort
   call copilot_chat#buffer#add_input_separator()
 endfunction
 
-function! copilot_chat#api#handle_job_error(...) abort
-  if a:0 < 2
-    return
-  endif
-
-  let l:msg = a:2
-  if type(l:msg) == v:t_list
-    call echom string(join(l:msg, "\n"))
+function! copilot_chat#api#handle_job_error(channel, msg) abort
+  if type(a:msg) == v:t_list
+    let l:filtered_errors = filter(copy(a:msg), '!empty(v:val)')
+    if len(l:filtered_errors) > 0
+      echom l:filtered_errors
+    endif
   else
-    echom l:msg
+    echom a:msg
   endif
 endfunction
 
