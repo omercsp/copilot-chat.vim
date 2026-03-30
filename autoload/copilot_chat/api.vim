@@ -211,16 +211,21 @@ export def FetchModels()
 enddef
 
 def HandleFetchModelsExit(output: list<string>, status: number)
-  if status == 0
+  if status == 0 || type(output) != v:t_dict
     var response = join(output, '')
     var model_list = []
     var model_multipliers = {}
     var json_response = json_decode(response)
+	if type(json_response) != v:t_dict || !has_key(json_response, 'data') || type(json_response.data) != v:t_list
+      return
+    endif
     for item in json_response.data
-      if has_key(item, 'id')
-        model_list->add(item.id)
-        model_multipliers[item.id] = item.billing.multiplier
+      # If item isn't a dictionary with an 'id' key, skip it
+      if type(item) != v:t_dict || !has_key(item, 'id')
+        continue
       endif
+      model_list->add(item.id)
+      model_multipliers[item.id] = item.billing.multiplier
     endfor
     g:copilot_chat_available_models = model_list
     g:copilot_chat_model_multipliers = model_multipliers

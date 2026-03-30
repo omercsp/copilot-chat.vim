@@ -84,6 +84,9 @@ enddef
 def HandleGetTokenExit(lines: list<string>, status: number)
   if status == 0
     var json_response = json_decode(join(lines, ''))
+	if type(json_response) != type({})
+		return
+	endif
     var chat_token = json_response.token
     writefile([chat_token], chat_token_file)
     g:copilot_chat_token = chat_token
